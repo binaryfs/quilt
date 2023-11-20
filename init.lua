@@ -1,5 +1,5 @@
-local BASE = (...):gsub("init$", "")
-local NinePatch = require(BASE .. ".NinePatch")
+local BASE = (...):gsub("init$", ""):gsub("([^%.])$", "%1%.")
+local NinePatch = require(BASE .. "NinePatch")
 
 local quilt = {
   _NAME = "quilt",
