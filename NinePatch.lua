@@ -36,7 +36,7 @@ end
 --- * The top and bottom patches can stretch horizontally
 --- * The left and right patches can stretch vertically
 --- * The patch in the middle can stretch in all directions
---- @class ninepatch.NinePatch
+--- @class quilt.NinePatch
 --- @field protected _mesh love.Mesh
 --- @field protected _marginLeft number Width of left column
 --- @field protected _marginTop number Height of top row
@@ -68,10 +68,10 @@ NinePatch.VERTEX_MAP = {
 --- @param mr integer Width of the right patch column
 --- @param mb integer Height of the bottom patch row
 --- @param ml integer Width of the left patch column
---- @return ninepatch.NinePatch
+--- @return quilt.NinePatch
 --- @nodiscard
 function NinePatch.new(texture, x, y, w, h, mt, mr, mb, ml)
-  --- @type ninepatch.NinePatch
+  --- @type quilt.NinePatch
   local self = setmetatable({}, NinePatch)
 
   self._mesh = love.graphics.newMesh(16, "triangles", "dynamic")
@@ -120,7 +120,7 @@ end
 
 --- Create a 9-patch from the specified options table.
 --- @param options table
---- @return ninepatch.NinePatch
+--- @return quilt.NinePatch
 --- @nodiscard
 function NinePatch.fromOptions(options)
   return NinePatch.new(
@@ -157,7 +157,7 @@ end
 --- @return number minWidth
 --- @return number minHeight
 --- @nodiscard
---- @see ninepatch.NinePatch.getSize
+--- @see quilt.NinePatch.getSize
 function NinePatch:getMinSize()
   return self._marginLeft + self._marginRight,
     self._marginTop + self._marginBottom
@@ -166,7 +166,7 @@ end
 --- @return number width
 --- @return number height
 --- @nodiscard
---- @see ninepatch.NinePatch.getMinSize
+--- @see quilt.NinePatch.getMinSize
 function NinePatch:getSize()
   return self._width, self._height
 end
@@ -176,7 +176,7 @@ end
 --- The specified size is automatcally clamped to the minimum size.
 --- @param width number? (default: original width)
 --- @param height number? (default: original height)
---- @return ninepatch.NinePatch self
+--- @return quilt.NinePatch self
 function NinePatch:setSize(width, height)
   local minWidth, minHeight = self:getMinSize()
 
@@ -212,13 +212,13 @@ function NinePatch:setSize(width, height)
 end
 
 --- @param width number
---- @return ninepatch.NinePatch self
+--- @return quilt.NinePatch self
 function NinePatch:setWidth(width)
   return self:setSize(width, self._height)
 end
 
 --- @param height number
---- @return ninepatch.NinePatch self
+--- @return quilt.NinePatch self
 function NinePatch:setHeight(height)
   return self:setSize(self._width, height)
 end
@@ -227,7 +227,7 @@ end
 ---
 --- This method is a simple wrapper around the `love.graphics.draw` function.
 --- @param ... any Arguments for `love.graphics.draw`
---- @return ninepatch.NinePatch self
+--- @return quilt.NinePatch self
 function NinePatch:draw(...)
   lg.draw(self._mesh, ...)
   return self

@@ -30,12 +30,12 @@ The nine patches shown above have the following properties:
 Basic example:
 
 ```lua
-local ninepatch = require("libs.ninepatch")
+local quilt = require("libs.quilt")
 
 local np
 
 function love.load()
-  np = ninepatch.newNinePatch(
+  np = quilt.newNinePatch(
     love.graphics.newImage("assets/texture.png"),
     10,  -- X position of 9-patch on texture
     10,  -- Y position of 9-patch on texture
@@ -56,13 +56,13 @@ function love.draw()
 end
 ```
 
-The `ninepatch.newNinePatch` function (which was used in the code above) is an optional convenience function that aims to provide a LÖVE-like API. If you don't like it, you can use the `NinePatch` class directly:
+The `quilt.newNinePatch` function (which was used in the code above) is an optional convenience function that aims to provide a LÖVE-like API. If you don't like it, you can use the `NinePatch` class directly:
 
 ```lua
-local NinePatch = require("libs.ninepatch.NinePatch")
+local NinePatch = require("libs.quilt.NinePatch")
 
 local image = love.graphics.newImage("assets/texture.png")
--- Same parameters as for ninepatch.newNinePatch
+-- Same parameters as for quilt.newNinePatch
 local np = NinePatch.new(image, 10, 10, 100, 100, 20, 20, 20, 20)
 ```
 
@@ -85,7 +85,7 @@ local np = NinePatch.fromOptions{
 Get the underlying mesh with the `NinePatch.getMesh` method to set vertext colors or to draw the mesh directly:
 
 ```lua
-local np = ninepatch.newNinePatch(...)
+local np = quilt.newNinePatch(...)
 local mesh = np:getMesh()
 
 -- Tint it red

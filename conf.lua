@@ -1,3 +1,3 @@
 function love.conf(t)
-  t.window.title = "ninepatch demo"
+  t.window.title = "quilt demo"
 end
