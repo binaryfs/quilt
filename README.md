@@ -1,11 +1,11 @@
-# Ninepatch
-The Ninepatch library offers a simple way to use 9-patch images in the [LÖVE](https://love2d.org/) framework.
+# Quilt
+The Quilt library offers a simple way to use 9-patch images in the [LÖVE](https://love2d.org/) framework.
 
-![Ninepatch demo screenshot](demoscreen.png?raw=true)
+![Quilt demo screenshot](demoscreen.png?raw=true)
 
 The primary aim behind creating this library was to provide 9-patch images that can be easily transformed and seamlessly loaded from an image atlas.
 
-Ninepatch achieves this functionality by using meshes to represent 9-patch images. These meshes are structured in the following way:
+Quilt achieves this functionality by using meshes to represent 9-patch images. These meshes are structured in the following way:
 
      1    2    3    4
      ┌────┬────┬────┐
