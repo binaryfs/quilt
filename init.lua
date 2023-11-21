@@ -1,4 +1,6 @@
 local BASE = (...):gsub("init$", ""):gsub("([^%.])$", "%1%.")
+
+--- @type quilt.NinePatch
 local NinePatch = require(BASE .. "NinePatch")
 
 local quilt = {
@@ -31,19 +33,7 @@ local quilt = {
   ]],
 }
 
---- @param texture love.Texture Texture that contains the 9-patch
---- @param x integer X position of the 9-patch on the texture
---- @param y integer Y position of the 9-patch on the texture
---- @param w integer Width of the 9-patch
---- @param h integer Height of the 9-patch
---- @param mt integer Height of the top patch row
---- @param mr integer Width of the right patch column
---- @param mb integer Height of the bottom patch row
---- @param ml integer Width of the left patch column
---- @return quilt.NinePatch
---- @nodiscard
-function quilt.newNinePatch(texture, x, y, w, h, mt, mr, mb, ml)
-  return NinePatch.new(texture, x, y, w, h, mt, mr, mb, ml)
-end
+quilt.NinePatch = NinePatch
+quilt.newNinePatch = NinePatch.new
 
 return quilt

@@ -5,9 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [1.1.0] - 2023-11-x
 
+### Added
+
+- The `NinePatch` class can now be accessed through `quilt.NinePatch` directly
+
 ### Changed
 
-- Rename library from "ninepatch" to "quilt"
+- Renamed library from "ninepatch" to "quilt"
 
 ### Fixed
 

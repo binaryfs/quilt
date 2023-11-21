@@ -56,20 +56,18 @@ function love.draw()
 end
 ```
 
-The `quilt.newNinePatch` function (which was used in the code above) is an optional convenience function that aims to provide a LÖVE-like API. If you don't like it, you can use the `NinePatch` class directly:
+The `quilt.newNinePatch` function (which was used in the code above) is a convenience function that aims to provide a LÖVE-like API. If you don't like it, you can use the `NinePatch` constructor directly:
 
 ```lua
-local NinePatch = require("libs.quilt.NinePatch")
-
 local image = love.graphics.newImage("assets/texture.png")
 -- Same parameters as for quilt.newNinePatch
-local np = NinePatch.new(image, 10, 10, 100, 100, 20, 20, 20, 20)
+local np = quilt.NinePatch.new(image, 10, 10, 100, 100, 20, 20, 20, 20)
 ```
 
 And if you prefer named parameters, have a look at the `NinePatch.fromOptions` constructor:
 
 ```lua
-local np = NinePatch.fromOptions{
+local np = quilt.NinePatch.fromOptions{
   texture = love.graphics.newImage("assets/texture.png"),
   x = 10,
   y = 10,
