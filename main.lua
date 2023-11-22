@@ -19,7 +19,7 @@ end
 function love.load()
   runUnitTests()
 
-  local image = love.graphics.newImage("simple-rpg-gui.png")
+  local image = love.graphics.newImage("assets/simple-rpg-gui.png")
 
   frames[1] = {
     x = 30,

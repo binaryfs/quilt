@@ -1,7 +1,7 @@
 local loveunit = require("loveunit")
 local NinePatch = require("NinePatch")
 
-local image = love.graphics.newImage("simple-rpg-gui.png")
+local image = love.graphics.newImage("assets/simple-rpg-gui.png")
 local test = loveunit.newTestCase("NinePatch")
 
 --- @param r number

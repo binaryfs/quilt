@@ -1,7 +1,7 @@
 # Quilt
 The Quilt library offers a simple way to use 9-patch images in the [LÖVE](https://love2d.org/) framework.
 
-![Quilt demo screenshot](demoscreen.png?raw=true)
+![Quilt demo screenshot](assets/demoscreen.png?raw=true)
 
 The primary aim behind creating this library was to provide 9-patch images that can be easily transformed and seamlessly loaded from an image atlas.
 
