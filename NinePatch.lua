@@ -118,9 +118,7 @@ function NinePatch.new(texture, x, y, w, h, mt, mr, mb, ml)
   self._mesh:setVertexAttribute(5, POS_INDEX, 0, mt)
   self._mesh:setVertexAttribute(6, POS_INDEX, ml, mt)
 
-  for index = 1, self._mesh:getVertexCount() do
-    self._mesh:setVertexAttribute(index, COLOR_INDEX, 1, 1, 1, 1)
-  end
+  self:setColor(1, 1, 1, 1)
 
   self._width = 0
   self._height = 0
@@ -232,6 +230,26 @@ end
 --- @return quilt.NinePatch self
 function NinePatch:setHeight(height)
   return self:setSize(self._width, height)
+end
+
+--- Set the color of the whole 9-patch mesh.
+---
+--- Each color component is given as a floating point value in the range from 0 to 1.
+--- @param r number
+--- @param g number
+--- @param b number
+--- @param a number? alpha (default: 1)
+--- @return quilt.NinePatch self
+--- @overload fun(self: quilt.NinePatch, rgba: table): quilt.NinePatch
+--- @see quilt.NinePatch.setVertexColor
+function NinePatch:setColor(r, g, b, a)
+  if type(r) == "table" then
+    r, g, b, a = r[1], r[2], r[3], r[4]
+  end
+  for vertex = 1, self._mesh:getVertexCount() do
+    self._mesh:setVertexAttribute(vertex, COLOR_INDEX, r, g, b, a)
+  end
+  return self
 end
 
 --- Draw the 9-patch on the screen.

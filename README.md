@@ -25,6 +25,36 @@ The nine patches shown above have the following properties:
 * The left and right patches can stretch vertically
 * The patch in the middle can stretch in all directions
 
+## Requirements
+
+Quilt requires LÖVE 11.4 and has no other external dependencies.
+
+## Integration
+
+This section describes how to integrate Quilt into your project.
+
+### Manually
+
+Create a new subdirectory `libs/quilt` in your project root and paste the content of this repository into it. Afterwards you can include Quilt like this:
+
+```lua
+local quilt = require("libs.quilt")
+```
+
+### Git Submodule
+
+Run the following command in your project root to add quilt as a submodule:
+
+```
+git submodule add https://github.com/binaryfs/quilt.git libs/quilt
+```
+
+Afterwards you can include quilt like this:
+
+```lua
+local quilt = require("libs.quilt")
+```
+
 ## Usage
 
 Basic example:

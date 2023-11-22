@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - The `NinePatch` class can now be accessed through `quilt.NinePatch` directly
 - Unit tests based on loveunit
+- `NinePatch:setColor` to set the colors of all 9-patch vertices
 
 ### Changed
 

@@ -4,6 +4,22 @@ local NinePatch = require("NinePatch")
 local image = love.graphics.newImage("simple-rpg-gui.png")
 local test = loveunit.newTestCase("NinePatch")
 
+--- @param r number
+--- @param g number
+--- @param b number
+--- @param a number?
+--- @return number r
+--- @return number g
+--- @return number b
+--- @return number a
+--- @nodiscard
+local function convertColor(r, g, b, a)
+  return math.floor(r * 255) / 255,
+    math.floor(g * 255) / 255,
+    math.floor(b * 255) / 255,
+    math.floor((a or 1) * 255) / 255
+end
+
 test:group("new()", function ()
   test:run("should create a 9-patch with the given properties", function ()
     local patch = NinePatch.new(image, 0, 0, 300, 200, 20, 30, 40, 50)
@@ -77,5 +93,35 @@ test:group("setHeight()", function ()
     local patch = NinePatch.new(image, 0, 0, 300, 200, 20, 30, 40, 50)
     patch:setHeight(400)
     test:assertEqual({300, 400}, {patch:getSize()})
+  end)
+end)
+
+test:group("setColor()", function ()
+  test:run("should set the color of all vertices", function ()
+    local patch = NinePatch.new(image, 0, 0, 300, 200, 20, 30, 40, 50)
+    patch:setColor(0.1, 0.2, 0.3, 0.4)
+
+    local mesh = patch:getMesh()
+    for vertex = 1, mesh:getVertexCount() do
+      test:assertAlmostEqual({convertColor(0.1, 0.2, 0.3, 0.4)}, {mesh:getVertexAttribute(vertex, 3)})
+    end
+  end)
+  test:run("should set alpha to 1 by default", function ()
+    local patch = NinePatch.new(image, 0, 0, 300, 200, 20, 30, 40, 50)
+    patch:setColor(1, 1, 1)
+
+    local mesh = patch:getMesh()
+    for vertex = 1, mesh:getVertexCount() do
+      test:assertAlmostEqual({1, 1, 1, 1}, {mesh:getVertexAttribute(vertex, 3)})
+    end
+  end)
+  test:run("should accept a table", function ()
+    local patch = NinePatch.new(image, 0, 0, 300, 200, 20, 30, 40, 50)
+    patch:setColor{0.1, 0.2, 0.3, 0.4}
+
+    local mesh = patch:getMesh()
+    for vertex = 1, mesh:getVertexCount() do
+      test:assertAlmostEqual({convertColor(0.1, 0.2, 0.3, 0.4)}, {mesh:getVertexAttribute(vertex, 3)})
+    end
   end)
 end)
