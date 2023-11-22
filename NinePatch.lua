@@ -16,6 +16,17 @@ local function almostEqual(a, b)
   return abs(a - b) <= 1e-09 * max(abs(a), abs(b))
 end
 
+--- Clamp a value between a lower an an upper bound.
+--- @param value number
+--- @param min number The lower bound
+--- @param max number The upper bound
+--- @return number clampedValue
+--- @nodiscard
+--- @package
+local function clamp(value, min, max)
+  return value < min and min or (value > max and max or value)
+end
+
 --- A 9-patch image is a resizable image with defined stretchable regions.
 ---
 --- The 9-patches implemented by this class are based on meshes, which have the following structure:
@@ -125,8 +136,8 @@ end
 function NinePatch.fromOptions(options)
   return NinePatch.new(
     assert(options.texture, "texture required"),
-    assert(options.left, "left required"),
-    assert(options.top, "top required"),
+    assert(options.x, "x required"),
+    assert(options.y, "y required"),
     assert(options.width, "width required"),
     assert(options.height, "height required"),
     assert(options.marginTop, "marginTop required"),
@@ -144,10 +155,10 @@ function NinePatch:getMesh()
   return self._mesh
 end
 
---- @return number marginTop
---- @return number marginRight
---- @return number marginBottom
---- @return number marginLeft
+--- @return number marginTop Height of top row
+--- @return number marginRight Width of right column
+--- @return number marginBottom Height of the bottom row
+--- @return number marginLeft Width of the left column
 --- @nodiscard
 function NinePatch:getMargin()
   return self._marginTop, self._marginRight, self._marginBottom, self._marginLeft

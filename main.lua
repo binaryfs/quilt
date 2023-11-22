@@ -1,11 +1,24 @@
 -- quilt demo script
 
 local quilt = require("init")
+local loveunit = require("loveunit")
 
 local elasticFactor = 0
 local frames = {}
 
+local function runUnitTests()
+  loveunit.runTestFiles("tests")
+  local success, report = loveunit.report()
+
+  if not success then
+    print(report)
+    error("Unit tests failed!")
+  end
+end
+
 function love.load()
+  runUnitTests()
+
   local image = love.graphics.newImage("simple-rpg-gui.png")
 
   frames[1] = {

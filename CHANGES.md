@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 
 - The `NinePatch` class can now be accessed through `quilt.NinePatch` directly
+- Unit tests based on loveunit
 
 ### Changed
 
@@ -16,6 +17,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Fixed
 
 - Potential issue with require path
+- `NinePatch.fromOptions` expected `left` and `top` instead of `x` and  `y`
 
 ## [1.0.0] - 2023-11-03
 
