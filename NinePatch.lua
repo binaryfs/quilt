@@ -183,14 +183,14 @@ end
 --- Resize the 9-patch to the specified size.
 ---
 --- The specified size is automatcally clamped to the minimum size.
---- @param width number? (default: original width)
---- @param height number? (default: original height)
+--- @param width number
+--- @param height number
 --- @return quilt.NinePatch self
 function NinePatch:setSize(width, height)
   local minWidth, minHeight = self:getMinSize()
 
-  width = math.max(width or self._width, minWidth)
-  height = math.max(height or self._height, minHeight)
+  width = math.max(width, minWidth)
+  height = math.max(height, minHeight)
 
   if almostEqual(width, self._width) and almostEqual(height, self._height) then
     return self
