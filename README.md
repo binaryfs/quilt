@@ -57,7 +57,7 @@ local quilt = require("libs.quilt")
 
 ## Usage
 
-Basic example:
+### Basic example
 
 ```lua
 local quilt = require("libs.quilt")
@@ -86,7 +86,7 @@ function love.draw()
 end
 ```
 
-The `quilt.newNinePatch` function (which was used in the code above) is a convenience function that aims to provide a LÖVE-like API. If you don't like it, you can use the `NinePatch` constructor directly:
+The `quilt.newNinePatch` function (which was used in the code above) is a convenience function that aims to provide a LÖVE-like API. If you don't like it, you can use the `NinePatch.new` constructor instead:
 
 ```lua
 local image = love.graphics.newImage("assets/texture.png")
@@ -110,17 +110,43 @@ local np = quilt.NinePatch.fromOptions{
 }
 ```
 
-Get the underlying mesh with the `NinePatch.getMesh` method to set vertext colors or to draw the mesh directly:
+### Modifying the mesh
+
+Use the `NinePatch:setSize` method to change the size of a 9-patch. Please note that a 9-patch cannot be smaller than its minimum size, which is the sum of its horizontal and vertical margins.
 
 ```lua
-local np = quilt.newNinePatch(...)
-local mesh = np:getMesh()
+local npatch = quilt.newNinePatch(image, 0, 0, 100, 100, 2, 4, 8, 16)
 
+npatch:setSize(200, 100)
+
+-- You can also set width and height separately
+npatch:setWidth(200):setHeight(100)
+
+npatch:getMinSize() --> 10, 20
+```
+
+You can tint a 9-patch with the `NinePatch:setColor` method:
+
+```lua
 -- Tint it red
+npatch:setColor(1, 0, 0)
+
+-- You can also pass a color table
+npatch:setColor({1, 1, 1, 0.5})
+```
+
+If you need even more control (and know what you're doing), you can still get the underlying mesh with the `NinePatch:getMesh` method and modify it yourself:
+
+```lua
+local COLOR_INDEX = 3
+local npatch = quilt.newNinePatch(...)
+local mesh = npatch:getMesh()
+
 for vertex = 1, mesh:getVertextCount() do
-  mesh:setVertexAttribute(vertex, 3, 1, 0, 0, 1)
+  mesh:setVertexAttribute(vertex, COLOR_INDEX, getRandomColor())
 end
 
+-- You can also draw the mesh directly
 love.graphics.draw(mesh, 10, 20)
 ```
 

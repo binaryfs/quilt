@@ -3,6 +3,8 @@ local BASE = (...):gsub("init$", ""):gsub("([^%.])$", "%1%.")
 --- @type quilt.NinePatch
 local NinePatch = require(BASE .. "NinePatch")
 
+--- Provides 9-patch graphics for the LÖVE game framework.
+--- @class quilt
 local quilt = {
   _NAME = "quilt",
   _DESCRIPTION = "9-patch graphics for the LÖVE game framework",
