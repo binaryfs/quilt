@@ -1,12 +1,25 @@
--- ninepatch demo script
+-- quilt demo script
 
-local ninepatch = require("init")
+local quilt = require("init")
+local loveunit = require("loveunit")
 
 local elasticFactor = 0
 local frames = {}
 
+local function runUnitTests()
+  loveunit.runTestFiles("tests")
+  local success, report = loveunit.report()
+
+  if not success then
+    print(report)
+    error("Unit tests failed!")
+  end
+end
+
 function love.load()
-  local image = love.graphics.newImage("simple-rpg-gui.png")
+  runUnitTests()
+
+  local image = love.graphics.newImage("assets/simple-rpg-gui.png")
 
   frames[1] = {
     x = 30,
@@ -15,7 +28,7 @@ function love.load()
     height = 300,
     elasticX = 0,
     elasticY = 50,
-    patch = ninepatch.newNinePatch(image, 7, 6, 179, 94, 16, 16, 16, 16)
+    patch = quilt.newNinePatch(image, 7, 6, 179, 94, 16, 16, 16, 16)
   }
 
   frames[2] = {
@@ -25,7 +38,7 @@ function love.load()
     height = 40,
     elasticX = 20,
     elasticY = 0,
-    patch = ninepatch.newNinePatch(image, 337, 9, 66, 21, 6, 6, 6, 6)
+    patch = quilt.newNinePatch(image, 337, 9, 66, 21, 6, 6, 6, 6)
   }
 
   frames[3] = {
@@ -36,7 +49,7 @@ function love.load()
     elasticX = 20,
     elasticY = 30,
     rotation = math.rad(20),
-    patch = ninepatch.newNinePatch(image, 416, 9, 66, 21, 6, 6, 6, 6)
+    patch = quilt.newNinePatch(image, 416, 9, 66, 21, 6, 6, 6, 6)
   }
 
   frames[4] = {
@@ -47,7 +60,7 @@ function love.load()
     elasticX = 50,
     elasticY = 0,
     rotation = math.rad(-10),
-    patch = ninepatch.newNinePatch(image, 7, 6, 179, 94, 16, 16, 16, 16)
+    patch = quilt.newNinePatch(image, 7, 6, 179, 94, 16, 16, 16, 16)
   }
 
   -- Set vertex colors on the 9-patch to create a vertical gradient.

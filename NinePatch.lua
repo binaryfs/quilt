@@ -16,6 +16,17 @@ local function almostEqual(a, b)
   return abs(a - b) <= 1e-09 * max(abs(a), abs(b))
 end
 
+--- Clamp a value between a lower an an upper bound.
+--- @param value number
+--- @param min number The lower bound
+--- @param max number The upper bound
+--- @return number clampedValue
+--- @nodiscard
+--- @package
+local function clamp(value, min, max)
+  return value < min and min or (value > max and max or value)
+end
+
 --- A 9-patch image is a resizable image with defined stretchable regions.
 ---
 --- The 9-patches implemented by this class are based on meshes, which have the following structure:
@@ -36,7 +47,7 @@ end
 --- * The top and bottom patches can stretch horizontally
 --- * The left and right patches can stretch vertically
 --- * The patch in the middle can stretch in all directions
---- @class ninepatch.NinePatch
+--- @class quilt.NinePatch
 --- @field protected _mesh love.Mesh
 --- @field protected _marginLeft number Width of left column
 --- @field protected _marginTop number Height of top row
@@ -68,10 +79,10 @@ NinePatch.VERTEX_MAP = {
 --- @param mr integer Width of the right patch column
 --- @param mb integer Height of the bottom patch row
 --- @param ml integer Width of the left patch column
---- @return ninepatch.NinePatch
+--- @return quilt.NinePatch
 --- @nodiscard
 function NinePatch.new(texture, x, y, w, h, mt, mr, mb, ml)
-  --- @type ninepatch.NinePatch
+  --- @type quilt.NinePatch
   local self = setmetatable({}, NinePatch)
 
   self._mesh = love.graphics.newMesh(16, "triangles", "dynamic")
@@ -107,9 +118,7 @@ function NinePatch.new(texture, x, y, w, h, mt, mr, mb, ml)
   self._mesh:setVertexAttribute(5, POS_INDEX, 0, mt)
   self._mesh:setVertexAttribute(6, POS_INDEX, ml, mt)
 
-  for index = 1, self._mesh:getVertexCount() do
-    self._mesh:setVertexAttribute(index, COLOR_INDEX, 1, 1, 1, 1)
-  end
+  self:setColor(1, 1, 1, 1)
 
   self._width = 0
   self._height = 0
@@ -120,13 +129,13 @@ end
 
 --- Create a 9-patch from the specified options table.
 --- @param options table
---- @return ninepatch.NinePatch
+--- @return quilt.NinePatch
 --- @nodiscard
 function NinePatch.fromOptions(options)
   return NinePatch.new(
     assert(options.texture, "texture required"),
-    assert(options.left, "left required"),
-    assert(options.top, "top required"),
+    assert(options.x, "x required"),
+    assert(options.y, "y required"),
     assert(options.width, "width required"),
     assert(options.height, "height required"),
     assert(options.marginTop, "marginTop required"),
@@ -144,10 +153,10 @@ function NinePatch:getMesh()
   return self._mesh
 end
 
---- @return number marginTop
---- @return number marginRight
---- @return number marginBottom
---- @return number marginLeft
+--- @return number marginTop Height of top row
+--- @return number marginRight Width of right column
+--- @return number marginBottom Height of the bottom row
+--- @return number marginLeft Width of the left column
 --- @nodiscard
 function NinePatch:getMargin()
   return self._marginTop, self._marginRight, self._marginBottom, self._marginLeft
@@ -157,7 +166,7 @@ end
 --- @return number minWidth
 --- @return number minHeight
 --- @nodiscard
---- @see ninepatch.NinePatch.getSize
+--- @see quilt.NinePatch.getSize
 function NinePatch:getMinSize()
   return self._marginLeft + self._marginRight,
     self._marginTop + self._marginBottom
@@ -166,7 +175,7 @@ end
 --- @return number width
 --- @return number height
 --- @nodiscard
---- @see ninepatch.NinePatch.getMinSize
+--- @see quilt.NinePatch.getMinSize
 function NinePatch:getSize()
   return self._width, self._height
 end
@@ -174,14 +183,14 @@ end
 --- Resize the 9-patch to the specified size.
 ---
 --- The specified size is automatcally clamped to the minimum size.
---- @param width number? (default: original width)
---- @param height number? (default: original height)
---- @return ninepatch.NinePatch self
+--- @param width number
+--- @param height number
+--- @return quilt.NinePatch self
 function NinePatch:setSize(width, height)
   local minWidth, minHeight = self:getMinSize()
 
-  width = math.max(width or self._width, minWidth)
-  height = math.max(height or self._height, minHeight)
+  width = math.max(width, minWidth)
+  height = math.max(height, minHeight)
 
   if almostEqual(width, self._width) and almostEqual(height, self._height) then
     return self
@@ -212,22 +221,42 @@ function NinePatch:setSize(width, height)
 end
 
 --- @param width number
---- @return ninepatch.NinePatch self
+--- @return quilt.NinePatch self
 function NinePatch:setWidth(width)
   return self:setSize(width, self._height)
 end
 
 --- @param height number
---- @return ninepatch.NinePatch self
+--- @return quilt.NinePatch self
 function NinePatch:setHeight(height)
   return self:setSize(self._width, height)
+end
+
+--- Set the color of the whole 9-patch mesh.
+---
+--- Each color component is given as a floating point value in the range from 0 to 1.
+--- @param r number
+--- @param g number
+--- @param b number
+--- @param a number? alpha (default: 1)
+--- @return quilt.NinePatch self
+--- @overload fun(self: quilt.NinePatch, rgba: table): quilt.NinePatch
+--- @see quilt.NinePatch.setVertexColor
+function NinePatch:setColor(r, g, b, a)
+  if type(r) == "table" then
+    r, g, b, a = r[1], r[2], r[3], r[4]
+  end
+  for vertex = 1, self._mesh:getVertexCount() do
+    self._mesh:setVertexAttribute(vertex, COLOR_INDEX, r, g, b, a)
+  end
+  return self
 end
 
 --- Draw the 9-patch on the screen.
 ---
 --- This method is a simple wrapper around the `love.graphics.draw` function.
 --- @param ... any Arguments for `love.graphics.draw`
---- @return ninepatch.NinePatch self
+--- @return quilt.NinePatch self
 function NinePatch:draw(...)
   lg.draw(self._mesh, ...)
   return self
