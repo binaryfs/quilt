@@ -41,3 +41,6 @@ luac.out
 
 # OS files
 .DS_Store
+
+# Folders
+/libs

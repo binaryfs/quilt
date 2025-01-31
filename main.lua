@@ -1,23 +1,26 @@
 -- quilt demo script
 
 local quilt = require("init")
-local loveunit = require("loveunit")
+local lovecaseAvailable, lovecase = pcall(require, "libs.lovecase")
 
 local elasticFactor = 0
 local frames = {}
 
 local function runUnitTests()
-  loveunit.runTestFiles("tests")
-  local success, report = loveunit.report()
+  local report = lovecase.runAllTestFiles("tests", true)
+  print(report:getResults())
 
-  if not success then
-    print(report)
+  if report:hasErrors() then
     error("Unit tests failed!")
   end
 end
 
 function love.load()
-  runUnitTests()
+  if lovecaseAvailable then
+    runUnitTests()
+  else
+    print("lovecase is not available - skipping unit tests")
+  end
 
   local image = love.graphics.newImage("assets/simple-rpg-gui.png")
 

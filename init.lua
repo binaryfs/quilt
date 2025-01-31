@@ -8,7 +8,7 @@ local NinePatch = require(BASE .. "NinePatch")
 local quilt = {
   _NAME = "quilt",
   _DESCRIPTION = "9-patch graphics for the LÖVE game framework",
-  _VERSION = "1.1.0",
+  _VERSION = "1.1.1",
   _URL = "https://github.com/binaryfs/quilt",
   _LICENSE = [[
     MIT License

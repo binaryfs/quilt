@@ -27,7 +27,7 @@ The nine patches shown above have the following properties:
 
 ## Requirements
 
-Quilt requires LÖVE 11.4 and has no other external dependencies.
+Quilt requires LÖVE 11.x and has no other external dependencies.
 
 ## Integration
 
@@ -153,6 +153,9 @@ love.graphics.draw(mesh, 10, 20)
 ## Demo
 
 Clone this repository and run it with LÖVE to start the demo.
+
+If you want to run the unit tests, download [lovecase 4](https://github.com/binaryfs/lovecase) and copy the files into the subdirectory `libs/lovecase`. When you start the LÖVE demo, the unit tests are run automatically.
+
 
 ## Credits
 
