@@ -16,17 +16,6 @@ local function almostEqual(a, b)
   return abs(a - b) <= 1e-09 * max(abs(a), abs(b))
 end
 
---- Clamp a value between a lower an an upper bound.
---- @param value number
---- @param min number The lower bound
---- @param max number The upper bound
---- @return number clampedValue
---- @nodiscard
---- @package
-local function clamp(value, min, max)
-  return value < min and min or (value > max and max or value)
-end
-
 --- A 9-patch image is a resizable image with defined stretchable regions.
 ---
 --- The 9-patches implemented by this class are based on meshes, which have the following structure:
@@ -189,8 +178,8 @@ end
 function NinePatch:setSize(width, height)
   local minWidth, minHeight = self:getMinSize()
 
-  width = math.max(width, minWidth)
-  height = math.max(height, minHeight)
+  width = max(width, minWidth)
+  height = max(height, minHeight)
 
   if almostEqual(width, self._width) and almostEqual(height, self._height) then
     return self
